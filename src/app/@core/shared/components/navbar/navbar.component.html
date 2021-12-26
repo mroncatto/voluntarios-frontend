@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" [routerLink]="['/dashboard']">Red Voluntarios</a>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" [routerLink]="['/dashboard']" routerLinkActive="active"><i class="bi bi-house"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/actividad']" routerLinkActive="active" ><i class="bi bi-calendar-event"></i> Actividades</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/voluntario']" routerLinkActive="active"><i class="bi bi-people"></i> Voluntarios</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                <!-- <div class="dropdown">
+                    <span class="dropdown-toggle link" id="dropdownProfile" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Usuario
+                    </span>
+                    <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="dropdownProfile">
+                        <li><a href="#" class="dropdown-item">Profile <i class="bi bi-person-badge-fill"></i></a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Logout <i class="bi bi-box-arrow-right"></i></a></li>
+                    </ul>
+                </div> -->
+                <button class="btn btn-sm btn-success" [routerLink]="['/register']">Registarse</button>
+                <button class="btn btn-sm btn-outline-warning mx-1" [routerLink]="['/login']">Login</button>
+            </span>
+        </div>
+    </div>
+</nav>
