@@ -5,17 +5,18 @@ import localeEs from '@angular/common/locales/es';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './@core/shared/components/navbar/navbar.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DashboardModule } from './@core/components/dashboard/dashboard.module';
 import { ActividadModule } from './@core/components/actividad/actividad.module';
 import { UserModule } from './@core/components/user/user.module';
+import { AuthenticationInterceptor } from './@core/interceptor/authentication.interceptor';
 
 registerLocaleData(localeEs, 'es')
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +27,8 @@ registerLocaleData(localeEs, 'es')
     UserModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'es-PY' }
+    { provide: LOCALE_ID, useValue: 'es-PY' },
+    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}
 
   ],
   bootstrap: [AppComponent]

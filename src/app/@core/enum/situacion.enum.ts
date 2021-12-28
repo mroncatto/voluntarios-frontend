@@ -1,5 +1,5 @@
 export enum Situacion {
-    PENDIENTE, 
-    FINALIZADA, 
-    CANCELADA
+    PENDIENTE="PENDIENTE", 
+    FINALIZADA="FINALIZADA", 
+    CANCELADA="CANCELADA"
 }

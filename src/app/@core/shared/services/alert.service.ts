@@ -28,5 +28,23 @@ export class AlertService {
     })
   }
 
+  async confirmAlert(title: string, desc: string, icon: AlertIcon, yes: string = 'Si', no: string = 'Cancelar') {
+    return await Swal.fire({
+      title: title,
+      text: desc,
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: no,
+      confirmButtonText: yes,
+    }).then((result) => {
+      if (result.isConfirmed) return true;
+      return false;
+    })
+
+  }
+
+
 
 }

@@ -4,31 +4,40 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" [routerLink]="['/dashboard']" routerLinkActive="active"><i class="bi bi-house"></i> Dashboard</a>
+                    <a class="nav-link active" aria-current="page" [routerLink]="['/dashboard']"
+                        routerLinkActive="active"><i class="bi bi-house"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/actividad']" routerLinkActive="active" ><i class="bi bi-calendar-event"></i> Actividades</a>
+                    <a class="nav-link" [routerLink]="['/actividad']" routerLinkActive="active"><i
+                            class="bi bi-calendar-event"></i> Actividades</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/voluntario']" routerLinkActive="active"><i class="bi bi-people"></i> Voluntarios</a>
+                <li class="nav-item" *ngIf="this.isLoggedIn() | async">
+                    <a class="nav-link" [routerLink]="['/voluntario']" routerLinkActive="active"><i
+                            class="bi bi-people"></i> Voluntarios y Organizaciones</a>
                 </li>
             </ul>
-            <span class="navbar-text">
-                <!-- <div class="dropdown">
-                    <span class="dropdown-toggle link" id="dropdownProfile" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i> Usuario
+            <span class="navbar-text" *ngIf="this.isLoggedIn() | async; else nologin">
+                <div class="dropdown">
+                    <span class="dropdown-toggle link" id="dropdownProfile" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> {{user?.fullName}}
                     </span>
                     <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="dropdownProfile">
-                        <li><a href="#" class="dropdown-item">Profile <i class="bi bi-person-badge-fill"></i></a></li>
+                        <li><a class="dropdown-item link">Profile <i class="bi bi-person-badge-fill"></i></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Logout <i class="bi bi-box-arrow-right"></i></a></li>
+                        <li><a class="dropdown-item link" (click)="onLogout()">Logout <i
+                                    class="bi bi-box-arrow-right"></i></a></li>
                     </ul>
-                </div> -->
-                <button class="btn btn-sm btn-success" [routerLink]="['/register']">Registarse</button>
-                <button class="btn btn-sm btn-outline-warning mx-1" [routerLink]="['/login']">Login</button>
+                </div>
             </span>
+            <ng-template #nologin>
+                <span class="navbar-text" class="navbar-text">
+                    <button class="btn btn-sm btn-success" [routerLink]="['/register']">Registarse</button>
+                    <button class="btn btn-sm btn-outline-warning mx-1" [routerLink]="['/login']">Login</button>
+                </span>
+            </ng-template>
         </div>
     </div>
 </nav>

@@ -2,7 +2,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .card {
@@ -17,7 +17,7 @@
   margin: 1.5rem;
 }
 
-.card h3 {
+.card h5 {
   text-align: center;
 }
 
@@ -29,6 +29,10 @@
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
+}
+
+.card.green .additional {
+  background: linear-gradient(#92bCa6, #A2CCB6);
 }
 
 
@@ -83,16 +87,24 @@
   height: 100%;
 }
 
-.card .additional .more-info h3 {
+.card .additional .more-info h5 {
   color: #fff;
   margin-bottom: 0;
 }
 
 
+.card.green .additional .more-info h5 {
+  color: #224C36;
+}
+
 .card .additional .coords {
   margin: 0 1rem;
   color: #fff;
   font-size: 1rem;
+}
+
+.card.green .additional .coords {
+  color: #325C46;
 }
 
 .card .additional .coords span + span {
@@ -108,6 +120,10 @@
   right: 1rem;
   top: auto;
   color: #fff;
+}
+
+.card.green .additional .stats {
+  color: #325C46;
 }
 
 .card .additional .stats > div {

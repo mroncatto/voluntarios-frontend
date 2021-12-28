@@ -3,7 +3,7 @@
         <div class="col-lg-3 col-sm-6">
             <div class="card-box bg-blue">
                 <div class="inner">
-                    <h3> 17 </h3>
+                    <h3> {{widget_actividades_pendientes}} </h3>
                     <p> Actividades Pendientes </p>
                 </div>
                 <div class="icon">
@@ -16,7 +16,7 @@
         <div class="col-lg-3 col-sm-6">
             <div class="card-box bg-green">
                 <div class="inner">
-                    <h3> 8 </h3>
+                    <h3> {{widget_actividades_finalizadas}} </h3>
                     <p> Actividades realizadas </p>
                 </div>
                 <div class="icon">
@@ -28,7 +28,7 @@
         <div class="col-lg-3 col-sm-6">
             <div class="card-box bg-orange">
                 <div class="inner">
-                    <h3> 7 </h3>
+                    <h3> {{widget_organizaciones}} </h3>
                     <p> Organizaciones </p>
                 </div>
                 <div class="icon">
@@ -40,7 +40,7 @@
         <div class="col-lg-3 col-sm-6">
             <div class="card-box bg-red">
                 <div class="inner">
-                    <h3> 37 </h3>
+                    <h3> {{widget_voluntarios}} </h3>
                     <p> Voluntarios </p>
                 </div>
                 <div class="icon">
@@ -51,165 +51,40 @@
         </div>
     </div>
     <div class="row mb-3">
-        <h4>Actividades Recientes <small><small class="text-muted link">Ver todas las actividades</small></small></h4>
+        <h4>Actividades Recientes <small><small class="text-muted link" [routerLink]="['/actividad']">Ver todas las actividades</small></small></h4>
         <hr>
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-3">
+            <div class="col-12 col-md-6 col-lg-3" *ngFor="let actividad of actividades">
                 <div class="card h-100">
-    
                     <div class="card-header px-4 pt-4">
-                        <div class="card-actions float-right">
-                            <div class="dropdown show">
-                                <a class="dropdown" href="#" data-bs-toggle="dropdown" data-display="static">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                </a>
-    
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Ver Actividad</a>
-                                    <a class="dropdown-item" href="#">Alterar</a>
-                                </div>
-                            </div>
+                        <h5 class="card-title text-primary mb-1 link link-focus" title="Ver actividad"
+                            [routerLink]="['/actividad/'+actividad.id+'/show']">{{actividad.actividad}}</h5>
+                        <div class="d-flex flex-column align-items-start">
+                            <span><strong>Organización:</strong> {{actividad.creadoPor.fullName}}</span>
+                            <div class="badge my-2 {{getSituacionClass(actividad.situacion)}}">{{actividad.situacion |
+                                titlecase}}</div>
                         </div>
-                        <h5 class="card-title mb-0 link link-focus" title="Ver actividad" [routerLink]="['/actividad/'+1+'/show']">Limpieza de las calles principales</h5>
-                        <div class="badge bg-success my-2">Pendiente</div>
                     </div>
                     <div class="card-body px-4 pt-2">
-                        <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
-                            sed ipsum.</p>
+                        <p class="mb-0" [innerHTML]="transform(actividad.detalle)">
     
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
+                        </p>
+                        <small class="text-muted d-flex">{{actividad.voluntarios.length}} voluntario(s)</small>
+                        <div *ngIf="this.isLoggedIn() | async">
+                            <span *ngFor="let voluntario of actividad.voluntarios">
+                                <img src="https://robohash.org/avatar3.png" title="{{voluntario.fullName}}"
+                                    class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
+                            </span>
+                        </div>
+    
+    
                     </div>
-                    <button class="btn btn-sm btn-success"><i class="bi bi-check-square"></i> Entrar como voluntario</button>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-4 pb-4">
-                            <p class="mb-2 font-weight-bold">Progress <span class="float-right">100%</span></p>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+    
+                    <button class="btn btn-sm btn-primary" [routerLink]="['/actividad/'+actividad.id+'/show']"><i class="bi bi-box-arrow-up-right"></i> Ver detalles</button>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card h-100">
-    
-                    <div class="card-header px-4 pt-4">
-                        <div class="card-actions float-right">
-                            <div class="dropdown show">
-                                <a href="#" data-toggle="dropdown" data-display="static">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                </a>
-    
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 class="card-title mb-0">Company posters</h5>
-                        <div class="badge bg-warning my-2">In progress</div>
-                    </div>
-                    <div class="card-body px-4 pt-2">
-                        <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat
-                            at massa.</p>
-    
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                    </div>
-                    <button class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i> Salir de la actividad</button>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-4 pb-4">
-                            <p class="mb-2 font-weight-bold">Progress <span class="float-right">75%</span></p>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card">
-    
-                    <div class="card-header px-4 pt-4">
-                        <div class="card-actions float-right">
-                            <div class="dropdown show">
-                                <a href="#" data-toggle="dropdown" data-display="static">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                </a>
-    
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 class="card-title mb-0">Product page design</h5>
-                        <div class="badge bg-success my-2">Finished</div>
-                    </div>
-                    <div class="card-body px-4 pt-2">
-                        <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
-                            sed ipsum.</p>
-    
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-4 pb-4">
-                            <p class="mb-2 font-weight-bold">Progress <span class="float-right">100%</span></p>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card">
-    
-                    <div class="card-header px-4 pt-4">
-                        <div class="card-actions float-right">
-                            <div class="dropdown show">
-                                <a href="#" data-toggle="dropdown" data-display="static">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                </a>
-    
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 class="card-title mb-0">Upgrade CRM software</h5>
-                        <div class="badge bg-warning my-2">In progress</div>
-                    </div>
-                    <div class="card-body px-4 pt-2">
-                        <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam
-                            ultrices mauris.</p>
-    
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-4 pb-4">
-                            <p class="mb-2 font-weight-bold">Progress <span class="float-right">50%</span></p>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <div class="alert alert-info text-center" *ngIf="actividades.length===0">
+                No hay actividades
             </div>
         </div>
     </div>

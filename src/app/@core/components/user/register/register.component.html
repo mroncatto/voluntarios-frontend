@@ -5,45 +5,74 @@
                 <div class="card-header bg-primary text-white text-center">
                     <h4><i class="bi bi-people"></i> Registarse en la plataforma</h4>
                 </div>
-                <form>
+                <form [formGroup]="userForm" (ngSubmit)="onCreateOrUpdate()">
                     <div class="card-body">
-                        <div class="mb-2">
-                            <label for="" class="form-label">Nombre Completo:</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                                placeholder="" required>
-                            <small *ngIf="false" id="helpId" class="form-text text-muted">Help text</small>
+                        <div>
+                            <label for="fullName" class="form-label">Nombre Completo:</label>
+                            <input formControlName="fullName" type="text" class="form-control" name="fullName"
+                                id="fullName" aria-describedby="fullName" placeholder="Digite su nombre completo"
+                                autocomplete="off" required>
+                            <small class="form-text text-danger" style="visibility: hidden"
+                                [ngClass]="{ 'visible': userForm.controls['fullName'].invalid && userForm.controls['fullName'].touched}">
+                                {{getErrorMessage(userForm.controls['fullName'])}}
+                            </small>
+                        </div>
+                        <div>
+                            <label for="email" class="form-label">Correo:</label>
+                            <input formControlName="email" type="email" class="form-control" name="email" id="email"
+                                aria-describedby="email" placeholder="Digite un correo válido" autocomplete="off"
+                                required>
+                            <small class="form-text text-danger" style="visibility: hidden"
+                                [ngClass]="{ 'visible': userForm.controls['email'].invalid && userForm.controls['email'].touched}">
+                                {{getErrorMessage(userForm.controls['email'])}}
+                            </small>
+                        </div>
+                        <div>
+                            <label for="ciudad" class="form-label">Ciudad:</label>
+                            <input formControlName="ciudad" type="text" class="form-control" name="ciudad"
+                                id="ciudad" aria-describedby="ciudad" placeholder="Digite el nombre de su ciudad"
+                                autocomplete="off" required>
+                            <small class="form-text text-danger" style="visibility: hidden"
+                                [ngClass]="{ 'visible': userForm.controls['ciudad'].invalid && userForm.controls['ciudad'].touched}">
+                                {{getErrorMessage(userForm.controls['fullName'])}}
+                            </small>
+                        </div>
+                        <div>
+                            <label for="username" class="form-label">Username</label>
+                            <input formControlName="username" type="text" class="form-control" name="username"
+                                id="username" aria-describedby="username" autocomplete="off"
+                                placeholder="Digite un username, apenas letras minúsculas o mayúsculas sin espacio"
+                                required>
+                            <small class="form-text text-danger" style="visibility: hidden"
+                                [ngClass]="{ 'visible': userForm.controls['username'].invalid && userForm.controls['username'].touched}">
+                                {{getErrorMessage(userForm.controls['username'])}}
+                            </small>
                         </div>
                         <div class="mb-2">
-                            <label for="" class="form-label">Correo:</label>
-                            <input type="email" class="form-control" name="" id="" aria-describedby="helpId"
-                                placeholder="" required>
-                            <small *ngIf="false" id="helpId" class="form-text text-muted">Help text</small>
+                            <label for="password" class="form-label">Password</label>
+                            <input formControlName="password" type="password" class="form-control" name="password"
+                                id="password" aria-describedby="password"
+                                placeholder="Digite un contraseña de mínimo 6 caracteres" required>
+                            <small class="form-text text-danger" style="visibility: hidden"
+                                [ngClass]="{ 'visible': userForm.controls['password'].invalid && userForm.controls['password'].touched}">
+                                {{getErrorMessage(userForm.controls['password'])}}
+                            </small>
                         </div>
-                        <div class="mb-2">
-                            <label for="" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                                placeholder="" required>
-                            <small *ngIf="false" id="helpId" class="form-text text-muted">Help text</small>
-                        </div>
-                        <div class="mb-2">
-                            <label for="" class="form-label">Password</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                                placeholder="" required>
-                            <small *ngIf="false" id="helpId" class="form-text text-muted">Help text</small>
-                        </div>
-                        <div class="mb-2 d-flex justify-content-between">
+                        <div class="d-flex justify-content-between">
                             <label for="" class="form-label align-self-start">Tipo de cuenta: </label>
-                            <input type="radio" class="btn-check" name="options-outlined" id="success-outlined"
-                                autocomplete="off" checked>
-                            <label class="btn btn-outline-success" for="success-outlined">Cuenta Voluntario</label>
 
-                            <input type="radio" class="btn-check" name="options-outlined" id="info-outlined"
-                                autocomplete="off">
-                            <label class="btn btn-outline-info" for="info-outlined">Cuenta Organización</label>
+                            <input formControlName="userTipo" type="radio" class="btn-check" name="userTipo"
+                                autocomplete="off" value="VOLUNTARIO" id="VOLUNTARIO">
+                            <label class="btn btn-outline-success" for="VOLUNTARIO">Voluntario</label>
+
+                            <input formControlName="userTipo" type="radio" class="btn-check" name="userTipo"
+                                autocomplete="off" value="ORGANIZACION" id="ORGANIZACION">
+                            <label class="btn btn-outline-danger" for="ORGANIZACION">Organización</label>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center">
-                        <button class="btn btn-lg btn-outline-primary">Registrarse</button>
+                        <button class="btn btn-lg btn-outline-primary"
+                            [disabled]="userForm.invalid || loading">Registrarse</button>
                     </div>
                 </form>
             </div>

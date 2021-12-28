@@ -1,22 +1,27 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertIcon } from '../enum/alert-icon.enum';
 import { AlertService } from './alert.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandlingService {
 
-  constructor(private alert: AlertService) { }
+  constructor(private alert: AlertService, private authService: AuthService) { }
 
   exec(e: HttpErrorResponse): void {
     switch (e.status) {
       case 400: {
-        this.alert.normalAlert('Datos inválidos.', e.error.message, AlertIcon.WARNING);
+        this.alert.normalAlert('Datos inválidos.', e.error?.message, AlertIcon.WARNING);
         break;
       }
       case 401: {
+        if (this.authService.isUserLoggedIn()) {
+          this.authService.onLogout();
+        }
         this.alert.normalAlert('No autorizado.', "Es necesario autenticarse!", AlertIcon.WARNING);
         break;
       }

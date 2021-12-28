@@ -5,45 +5,72 @@
                 <div class="card-header bg-primary text-white text-center">
                     <h4><i class="bi bi-calendar-event"></i> Registar una actividad</h4>
                 </div>
-                <form>
+                <form [formGroup]="actividadForm" (ngSubmit)="onCreateOrUpdate()">
                     <div class="card-body">
-                        <div class="mb-2">
-                            <label for="" class="form-label">Nombre de la actividad:</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                                placeholder="" required>
-                            <small *ngIf="false" id="helpId" class="form-text text-muted">Help text</small>
+                        <div class="mb-1">
+                            <label for="actividad" class="form-label">Nombre de la actividad:</label>
+                            <input formControlName="actividad" name="actividad" type="text" class="form-control"
+                                aria-describedby="actividad" placeholder="Nombre de la actividad" autocomplete="off"
+                                maxlength="75" required>
+                            <small class="form-text text-danger" style="visibility: hidden"
+                                [ngClass]="{ 'visible': actividadForm.controls['actividad'].invalid && actividadForm.controls['actividad'].touched}">
+                                {{getErrorMessage(actividadForm.controls['actividad'])}}
+                            </small>
                         </div>
-                        <div class="mb-2">
-                            <label for="" class="form-label">Detalles de la actividad:</label>
-                            <textarea contenteditable="true" spellcheck="false" dropzone="true" class="form-control"
-                                name="output" id="output" aria-describedby="output" placeholder=""></textarea>
-                            <small *ngIf="false" id="helpId" class="form-text text-muted">Help text</small>
+                        <div class="mb-1">
+                            <label for="detalle" class="form-label">Detalles de la actividad:</label>
+                            <!-- <textarea formControlName="detalle" contenteditable="true" spellcheck="false"
+                                dropzone="true" class="form-control" name="detalle" id="detalle"
+                                aria-describedby="detalle" rows="8" placeholder="Detalles de la actividad"
+                                maxlength="500" required></textarea> -->
+                            <editor formControlName="detalle" apiKey="" [init]="{
+                                    icons: 'material',
+                                    skin: 'borderless',
+                                    plugins: 'wordcount',
+                                    menubar: false,
+                                    min_height: 150
+                                 }">
+                            </editor>
+                            <div class="d-flex justify-content-between">
+                                <small class="form-text text-danger" style="visibility: hidden"
+                                    [ngClass]="{ 'visible': actividadForm.controls['detalle'].invalid && actividadForm.controls['detalle'].touched}">
+                                    {{getErrorMessage(actividadForm.controls['detalle'])}}
+                                </small>
+                                <small class="form-text"
+                                    [ngClass]="{'text-danger': actividadForm.controls['detalle'].value.length>2000}">
+                                    {{actividadForm.controls['detalle'].value.length}}/2000
+                                </small>
+                            </div>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-1">
                             <label for="" class="form-label">Inicio de la actividad:</label>
-                            <input type="date" class="form-control" name="" id="" aria-describedby="helpId"
-                                placeholder="" required>
-                            <small *ngIf="false" id="helpId" class="form-text text-muted">Help text</small>
+                            <input formControlName="inicio" name="inicio" type="date" class="form-control"
+                                aria-describedby="inicio" placeholder="Fecha de inicio de la actividad" required>
+                            <small class="form-text text-danger" style="visibility: hidden"
+                                [ngClass]="{ 'visible': actividadForm.controls['inicio'].invalid && actividadForm.controls['inicio'].touched}">
+                                {{getErrorMessage(actividadForm.controls['inicio'])}}
+                            </small>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-1">
                             <label for="" class="form-label align-self-start">Situación: </label>
                             <div class="d-flex justify-content-center gap-2">
-                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined"
-                                    autocomplete="off" checked>
-                                <label class="btn btn-outline-success" for="success-outlined">Pendiente</label>
+                                <input formControlName="situacion" name="situacion" id="pendiente" type="radio"
+                                    class="btn-check" autocomplete="off" value="PENDIENTE">
+                                <label class="btn btn-outline-success" for="pendiente">Pendiente</label>
 
-                                <input type="radio" class="btn-check" name="options-outlined" id="warning-outlined"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-warning" for="warning-outlined">Finalizada</label>
+                                <input formControlName="situacion" name="situacion" id="finalizada" type="radio"
+                                    class="btn-check" autocomplete="off" value="FINALIZADA">
+                                <label class="btn btn-outline-warning" for="finalizada">Finalizada</label>
 
-                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-danger" for="danger-outlined">Cancelada</label>
+                                <input formControlName="situacion" name="situacion" id="cancelada" type="radio"
+                                    class="btn-check" autocomplete="off" value="CANCELADA">
+                                <label class="btn btn-outline-danger" for="cancelada">Cancelada</label>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center">
-                        <button class="btn btn-lg btn-outline-primary">Crear actividad</button>
+                        <button [disabled]="actividadForm.invalid" class="btn btn-lg btn-outline-primary">Crear
+                            actividad</button>
                     </div>
                 </form>
             </div>

@@ -1,0 +1,4 @@
+export enum UserTipo {
+    ORGANIZACION="ORGANIZACION",
+    VOLUNTARIO="VOLUNTARIO"
+}

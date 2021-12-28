@@ -1,4 +1,4 @@
-import { UserTipo } from "../../enum/tipo-user.enum"
+import { UserTipo } from "./tipo-user.enum"
 
 export class User {
     readonly id!: number;
@@ -7,17 +7,13 @@ export class User {
     email!: string;
     username!: string;
     password!: string;
-    userTipo: UserTipo;
+    userTipo!: UserTipo;
+    lastLoginDate!: Date;
     joinDate!: Date;
     updatedAt!: Date;
     active!: boolean;
     nonLocked!: boolean;
-    roles: Role[];
-
-    constructor(){
-        this.userTipo = UserTipo.VOLUNTARIO;
-        this.roles = [];
-    }
+    roles: Role[]=[];
 }
 
 export class Role {

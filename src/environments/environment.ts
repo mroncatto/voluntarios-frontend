@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL: "http://localhost:4200/v1"
+  API_URL: "http://localhost:8180/v1",
+  ALOHOMORA: 'a8d2d1c7d9c7983488f8f2feab347b361d8f0d0cb344b5587cd95b358f211d33'
 };
 
 /*
