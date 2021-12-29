@@ -1,4 +1,4 @@
-import { Situacion } from "../../enum/situacion.enum";
+import { Situacion } from "./enum/situacion.enum";
 import { User } from "../user/user.entity";
 
 export class Actividad {

@@ -1,7 +1,7 @@
-import { HttpClient, HttpContext } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../../components/user/user.entity';
 import { LoginHttpResponse } from '../../interfaces/login-http-response';
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
 
-  // Verifica si existe usuario logado
+  // Verifica si existe usuario autenticado
   isUserLoggedIn(): boolean {
     return this.getUserFromLocalStorage() !== null;
   }
@@ -69,7 +69,7 @@ export class AuthService {
     return this.cryptService.decrypt(localStorage.getItem('access_token') as string, this.alohomora);
   }
 
-  // Adiciona el usuario logueado a localStorage
+  // Adiciona el usuario autenticado a localStorage
   addUserToLocalCache(user: User): void {
     localStorage.removeItem('user');
     localStorage.setItem('user', this.cryptService.encrypt(JSON.stringify(user), this.alohomora));

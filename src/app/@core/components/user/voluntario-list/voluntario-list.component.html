@@ -1,17 +1,14 @@
 <div class="container mt-4">
     <h1 class="h3 my-3">Voluntarios y Organizaciones</h1>
 
-    <div class="row">
+    <div class="row" *ngIf="!loading">
         <div class="card" *ngFor="let user of users" [ngClass]="{green: user.userTipo==='ORGANIZACION'}">
             <div class="additional">
                 <div class="user-card">
                     <div class="level center">
                         {{user.userTipo}}
                     </div>
-                    <div class="points center">
-                        7 Actividades
-                    </div>
-                    <img src="https://robohash.org/{{user.username}}"
+                    <img src="https://robohash.org/{{user.username}}?size=128x128"
                         class="img-fluid d-block mx-auto rounded-circle img-thumbnail mb-4">
                 </div>
                 <div class="more-info">
@@ -27,16 +24,12 @@
             <div class="general" *ngIf="user.userTipo==='ORGANIZACION'; else voluntario">
                 <h5>{{user.fullName}}</h5>
                 <p class="text-center pt-2">Registrado el <strong>{{user.joinDate | date}}</strong></p>
-                <p class="text-center pt-2 m-0"><strong>Última actividad creada:</strong></p>
-                <p class="text-center p-0 text-muted">Aún no ha creado ninguna</p>
                 <span class="more"><small class="text-muted">Mueve el cursor sobre el card para mas info</small></span>
             </div>
             <ng-template #voluntario>
                 <div class="general">
                     <h5>{{user.fullName}}</h5>
                     <p class="text-center pt-2">Voluntario desde <strong>{{user.joinDate | date}}</strong></p>
-                    <p class="text-center pt-2 m-0"><strong>Última actividad como voluntario:</strong></p>
-                    <p class="text-center p-0 text-muted">Aún no ha participado</p>
                     <span class="more"><small class="text-muted">Mueve el cursor sobre el card para mas
                             info</small></span>
                 </div>
@@ -45,21 +38,11 @@
         <div *ngIf="users.length===0">
             <h5 class="alert alert-info text-center">No hay voluntarios registrados!</h5>
         </div>
-
-
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link">Anterior</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Próxima</a>
-                </li>
-            </ul>
-        </nav>
-
+        <paginator-nav *ngIf="paginator" [route]="'voluntario'" [paginator]="paginator"></paginator-nav>
+    </div>
+    <div class="d-flex justify-content-center " *ngIf="loading">
+        <div class="spinner-border m-5" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 </div>

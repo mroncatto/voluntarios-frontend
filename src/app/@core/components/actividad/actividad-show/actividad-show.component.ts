@@ -3,15 +3,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { Situacion } from 'src/app/@core/enum/situacion.enum';
 import { AlertIcon } from 'src/app/@core/shared/enum/alert-icon.enum';
 import { AlertService } from 'src/app/@core/shared/services/alert.service';
 import { AuthService } from 'src/app/@core/shared/services/auth.service';
-import { ErrorHandlingService } from 'src/app/@core/shared/services/error-handling.service';
-import { UserTipo } from '../../user/tipo-user.enum';
+import { UserTipo } from '../../user/enum/tipo-user.enum';
 import { User } from '../../user/user.entity';
 import { Actividad } from '../actividad.entity';
 import { ActividadService } from '../actividad.service';
+import { Situacion } from '../enum/situacion.enum';
 
 @Component({
   selector: 'app-actividad-show',
@@ -24,11 +23,13 @@ export class ActividadShowComponent implements OnInit, OnDestroy {
   private sub: Subscription[] = [];
   loading: boolean = false;
   private currentUser!: User | null;
+
   constructor(private actividadService: ActividadService, private alertService: AlertService,
     private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router,
     private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    this.loading = true;
     // Carga la actividad mediante el ID
     this.activatedRoute.params.subscribe(params => {
       const id: number = params['id'];
@@ -80,9 +81,11 @@ export class ActividadShowComponent implements OnInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustHtml(value);
   }
 
+  // Mediante un confirm de Swal realiza la suscripcion en la actividad
   async suscribe(accion: string): Promise<void> {
     if (await this.alertService.confirmAlert('Suscripción', `Deseas ${accion} la actividad '${this.actividad.actividad}' ?`, AlertIcon.QUESTION)) {
       if (this.currentUser !== null) {
+        this.loading = true;
         this.sub.push(
           this.actividadService.suscribe(this.actividad).subscribe({
             next: (data) => this.onSuccess(data, true),
@@ -91,13 +94,14 @@ export class ActividadShowComponent implements OnInit, OnDestroy {
           })
         )
       } else {
+        // Si no esta autenticado lo envia a login para autenticarse
         this.router.navigate(['login']);
         this.alertService.normalAlert("Ya posee una cuenta ?", "Realiza login para participar de las actividades!", AlertIcon.INFO);
       }
     }
   }
 
-  // Obtiene css para las situaciones correspondientes
+  // Retornar la clase css en base a la situacion de la actividad
   getSituacionClass(situacion: Situacion): string {
     const situacionClass = {
       PENDIENTE: 'bg-success',
@@ -107,6 +111,7 @@ export class ActividadShowComponent implements OnInit, OnDestroy {
     return situacionClass[situacion];
   }
 
+  // Procesa el success verificando si la carga es normal o de una suscripcion / desuscripcion 
   private onSuccess(data: Actividad, suscribe: boolean): void {
     this.actividad = data;
     if (suscribe) {

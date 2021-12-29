@@ -11,7 +11,7 @@
                     <a class="nav-link" [routerLink]="['/actividad']" routerLinkActive="active"><i
                             class="bi bi-calendar-event"></i> Actividades</a>
                 </li>
-                <li class="nav-item" *ngIf="this.isLoggedIn() | async">
+                <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/voluntario']" routerLinkActive="active"><i
                             class="bi bi-people"></i> Voluntarios y Organizaciones</a>
                 </li>
@@ -23,7 +23,8 @@
                         <i class="bi bi-person-circle"></i> {{user?.fullName}}
                     </span>
                     <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="dropdownProfile">
-                        <li><a class="dropdown-item link">Profile <i class="bi bi-person-badge-fill"></i></a></li>
+                        <li><a [routerLink]="['/profile']" class="dropdown-item link">Profile <i
+                                    class="bi bi-person-badge-fill"></i></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

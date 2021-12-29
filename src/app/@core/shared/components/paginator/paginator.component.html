@@ -1,25 +1,25 @@
-<nav aria-label="Page navigation example" *ngIf="paginas.length>0">
+<nav class="mt-3" aria-label="Page navigation" *ngIf="paginas.length>0">
     <ul class="pagination justify-content-center">
 
         <li class="page-item" [ngClass]="{disabled: paginator.first}">
-            <a class="page-link" [routerLink]="['/actividad/page', paginator.number-1]" aria-label="Previous">
+            <a class="page-link link" (click)="backPage()" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
 
         <li class="page-item" [ngClass]="{disabled: paginator.first}">
-            <a class="page-link" [routerLink]="['/actividad/page', 0]">Primera</a>
+            <a class="page-link link" (click)="firstPage()">Inicio</a>
         </li>
 
         <li *ngFor="let page of paginas" class="page-item" [ngClass]="{active: page-1 === paginator.number}">
-            <a class="page-link" [routerLink]="['/actividad/page', page-1]">{{page}} </a>
+            <a class="page-link link" (click)="goPage(page)">{{page}} </a>
         </li>
 
         <li class="page-item" [ngClass]="{disabled: paginator.last}">
-            <a class="page-link" [routerLink]="['/actividad/page', paginator.totalPages-1]">Última</a>
+            <a class="page-link link" (click)="lastPage()">Final</a>
         </li>
         <li class="page-item" [ngClass]="{disabled: paginator.last}">
-            <a class="page-link" [routerLink]="['/actividad/page', paginator.number+1]" aria-label="Next">
+            <a class="page-link link" (click)="nextPage()" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>

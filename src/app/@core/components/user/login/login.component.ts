@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   private sub: Subscription[] = [];
   loading: boolean = false;
+
   constructor(private formBuilder: FormBuilder, private formService: FormService, private alertService: AlertService,
     private authService: AuthService, private router: Router) { }
 
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.sub.forEach(sub => sub.unsubscribe());
   }
 
+  // Carga la validacion del formulario
   private loadLoginForm(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
   }
 
+  // Realiza login
   onLogin(): void {
     if (this.loginForm.valid) {
       this.sub.push(
@@ -50,6 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Si el login es valido salva el token y el usuario en cache
   private onSuccess(data: LoginHttpResponse): void {
     this.authService.saveToken(data.access_token, data.refresh_token);
     this.authService.addUserToLocalCache(data.user);

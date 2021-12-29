@@ -16,8 +16,14 @@ export class AuthorizationGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+    /**
+     * La metodologia con roles aun no esta implementada en la aplicacion !!!
+     */
+
+    // Si posee el role admin permite
     if (this.authService.hasRole("ADMIN")) return true;
 
+    // De lo contrario nega el acceso
     this.router.navigate(['dashboard']);
     this.alert.normalAlert("Acceso Denegado", `No tienes privilegios para acceder a esta página`, AlertIcon.WARNING);
     return false;

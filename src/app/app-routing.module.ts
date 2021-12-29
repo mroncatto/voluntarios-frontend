@@ -5,6 +5,7 @@ import { ActividadListComponent } from './@core/components/actividad/actividad-l
 import { ActividadShowComponent } from './@core/components/actividad/actividad-show/actividad-show.component';
 import { DashboardComponent } from './@core/components/dashboard/dashboard.component';
 import { LoginComponent } from './@core/components/user/login/login.component';
+import { ProfileComponent } from './@core/components/user/profile/profile.component';
 import { RegisterComponent } from './@core/components/user/register/register.component';
 import { VoluntarioListComponent } from './@core/components/user/voluntario-list/voluntario-list.component';
 import { AuthenticationGuard } from './@core/guard/authentication.guard';
@@ -15,9 +16,11 @@ const routes: Routes = [
   { path: 'actividad', component: ActividadListComponent },
   { path: 'actividad/page/:page', component: ActividadListComponent },
   { path: 'actividad/:id/show', component: ActividadShowComponent },
-  { path: 'actividad/form', component: ActividadFormComponent, canActivate: [AuthenticationGuard] },
-  { path: 'voluntario', component: VoluntarioListComponent, canActivate: [AuthenticationGuard] },
   { path: 'actividad/:id/form', component: ActividadFormComponent, canActivate: [AuthenticationGuard] },
+  { path: 'actividad/form', component: ActividadFormComponent, canActivate: [AuthenticationGuard] },
+  { path: 'voluntario', component: VoluntarioListComponent },
+  { path: 'voluntario/page/:page', component: VoluntarioListComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', redirectTo: 'dashboard' },

@@ -12,6 +12,7 @@ export class ErrorHandlingService {
 
   constructor(private alert: AlertService, private authService: AuthService) { }
 
+  // Proccesa los errores de las peticions http
   exec(e: HttpErrorResponse): void {
     switch (e.status) {
       case 400: {

@@ -1,4 +1,4 @@
-import { UserTipo } from "./tipo-user.enum"
+import { UserTipo } from "./enum/tipo-user.enum"
 
 export class User {
     readonly id!: number;

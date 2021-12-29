@@ -3,9 +3,10 @@
         <div class="col-lg-6 mt-4">
             <div class="card">
                 <div class="card-header bg-primary text-white text-center">
-                    <h4><i class="bi bi-calendar-event"></i> Registar una actividad</h4>
+                    <h4 *ngIf="!actividad.id"><i class="bi bi-calendar-event"></i> Registar una actividad</h4>
+                    <h4 *ngIf="actividad.id"><i class="bi bi-calendar-event"></i> Alterar la actividad</h4>
                 </div>
-                <form [formGroup]="actividadForm" (ngSubmit)="onCreateOrUpdate()">
+                <form *ngIf="actividadForm" [formGroup]="actividadForm" (ngSubmit)="onCreateOrUpdate()">
                     <div class="card-body">
                         <div class="mb-1">
                             <label for="actividad" class="form-label">Nombre de la actividad:</label>
@@ -19,12 +20,8 @@
                         </div>
                         <div class="mb-1">
                             <label for="detalle" class="form-label">Detalles de la actividad:</label>
-                            <!-- <textarea formControlName="detalle" contenteditable="true" spellcheck="false"
-                                dropzone="true" class="form-control" name="detalle" id="detalle"
-                                aria-describedby="detalle" rows="8" placeholder="Detalles de la actividad"
-                                maxlength="500" required></textarea> -->
-                            <editor formControlName="detalle" apiKey="" [init]="{
-                                    icons: 'material',
+                            <editor apiKey="6tkvpm850zrbqljmzyze5dw2c6zbc7oh8qg12en64mpq1aps" formControlName="detalle"
+                                [init]="{
                                     skin: 'borderless',
                                     plugins: 'wordcount',
                                     menubar: false,
@@ -43,9 +40,13 @@
                             </div>
                         </div>
                         <div class="mb-1">
-                            <label for="" class="form-label">Inicio de la actividad:</label>
-                            <input formControlName="inicio" name="inicio" type="date" class="form-control"
-                                aria-describedby="inicio" placeholder="Fecha de inicio de la actividad" required>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Inicio de la actividad</mat-label>
+                                <input matInput formControlName="inicio" [matDatepicker]="picker"
+                                    placeholder="Fecha de inicio de la actividad" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
                             <small class="form-text text-danger" style="visibility: hidden"
                                 [ngClass]="{ 'visible': actividadForm.controls['inicio'].invalid && actividadForm.controls['inicio'].touched}">
                                 {{getErrorMessage(actividadForm.controls['inicio'])}}
@@ -69,7 +70,8 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center">
-                        <button [disabled]="actividadForm.invalid" class="btn btn-lg btn-outline-primary">Crear
+                        <button [disabled]="actividadForm.invalid || loading"
+                            class="btn btn-lg btn-outline-primary">{{actividad.id?'Alterar':'Crear'}}
                             actividad</button>
                     </div>
                 </form>

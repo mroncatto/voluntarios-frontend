@@ -8,7 +8,7 @@ import { AlertService } from 'src/app/@core/shared/services/alert.service';
 import { AuthService } from 'src/app/@core/shared/services/auth.service';
 import { ErrorHandlingService } from 'src/app/@core/shared/services/error-handling.service';
 import { FormService } from 'src/app/@core/shared/services/form.service';
-import { UserTipo } from '../tipo-user.enum';
+import { UserTipo } from '../enum/tipo-user.enum';
 import { User } from '../user.entity';
 
 @Component({
@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   userForm!: FormGroup;
   private sub: Subscription[] = [];
   loading: boolean = false;
+
   constructor(private authService: AuthService, private formService: FormService, private formBuilder: FormBuilder,
     private alertService: AlertService, private router: Router, private errorHandlingService: ErrorHandlingService) { }
 
@@ -33,6 +34,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.sub.forEach(sub => sub.unsubscribe());
   }
 
+  // Carga la validacion del registro
   private loadUserForm(): void {
     this.userForm = this.formBuilder.group({
       fullName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(75)]],
@@ -48,11 +50,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onCreateOrUpdate(): void {
     if (this.userForm.valid) {
 
-
       // Si existe ID (se trata de alteraciones)
       if (this.user.id) {
 
-
+        // *** No utilizado ****
 
       } else {
         // De lo contrario un nuevo registro

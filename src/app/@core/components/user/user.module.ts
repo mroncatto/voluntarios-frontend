@@ -6,13 +6,16 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { VoluntarioListComponent } from './voluntario-list/voluntario-list.component';
+import { SharedModule } from '../../shared/shared.module';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
-    VoluntarioListComponent
+    VoluntarioListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -20,6 +23,7 @@ import { VoluntarioListComponent } from './voluntario-list/voluntario-list.compo
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule
 
   ],
   providers: [],

@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit {
     this.authService.onLogout();
   }
 
+  // Verifica si esta autenticado
   isLoggedIn(): Observable<boolean> {
     return this.authService.isLoggedIn;
   }

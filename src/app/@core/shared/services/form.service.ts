@@ -8,6 +8,7 @@ export class FormService {
 
   constructor() { }
 
+  // Procesa los errores de valiciones de formBuilder
   getErrorMessage(form: AbstractControl): string {
     if (form.hasError('pattern')) return "Patrón inválido";
     if (form.hasError('email')) return "Debes informar un correo válido";

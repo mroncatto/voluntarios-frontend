@@ -3,57 +3,74 @@
         <div class="col-lg-3 col-sm-6">
             <div class="card-box bg-blue">
                 <div class="inner">
-                    <h3> {{widget_actividades_pendientes}} </h3>
+                    <h3 *ngIf="!loading"> {{widget_actividades_pendientes}} </h3>
+                    <div *ngIf="loading" class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                     <p> Actividades Pendientes </p>
                 </div>
                 <div class="icon">
                     <i class="bi bi-calendar-event"></i>
                 </div>
-                <a href="#" class="card-box-footer">Ver todas <i class="fa fa-arrow-circle-right"></i></a>
+                <a [routerLink]="['/actividad']" class="card-box-footer">Ver todas <i
+                        class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
         <div class="col-lg-3 col-sm-6">
             <div class="card-box bg-green">
                 <div class="inner">
-                    <h3> {{widget_actividades_finalizadas}} </h3>
+                    <h3 *ngIf="!loading"> {{widget_actividades_finalizadas}} </h3>
+                    <div *ngIf="loading" class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                     <p> Actividades realizadas </p>
                 </div>
                 <div class="icon">
                     <i class="bi bi-check-square"></i>
                 </div>
-                <a href="#" class="card-box-footer">Ver todas <i class="fa fa-arrow-circle-right"></i></a>
+                <a [routerLink]="['/actividad']" class="card-box-footer">Ver todas <i
+                        class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card-box bg-orange">
                 <div class="inner">
-                    <h3> {{widget_organizaciones}} </h3>
+                    <h3 *ngIf="!loading"> {{widget_organizaciones}} </h3>
+                    <div *ngIf="loading" class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                     <p> Organizaciones </p>
                 </div>
                 <div class="icon">
                     <i class="bi bi-building"></i>
                 </div>
-                <a href="#" class="card-box-footer">Ver todos <i class="fa fa-arrow-circle-right"></i></a>
+                <a [routerLink]="['/voluntarios']" class="card-box-footer">Ver todos <i
+                        class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card-box bg-red">
                 <div class="inner">
-                    <h3> {{widget_voluntarios}} </h3>
+                    <h3 *ngIf="!loading"> {{widget_voluntarios}} </h3>
+                    <div *ngIf="loading" class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                     <p> Voluntarios </p>
                 </div>
                 <div class="icon">
                     <i class="bi bi-people"></i>
                 </div>
-                <a href="#" class="card-box-footer">Ver todos <i class="fa fa-arrow-circle-right"></i></a>
+                <a [routerLink]="['/voluntario']" class="card-box-footer">Ver todos <i
+                        class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
     <div class="row mb-3">
-        <h4>Actividades Recientes <small><small class="text-muted link" [routerLink]="['/actividad']">Ver todas las actividades</small></small></h4>
+        <h4>Actividades Recientes <small><small class="text-muted link" [routerLink]="['/actividad']">Ver todas las
+                    actividades</small></small></h4>
         <hr>
-        <div class="row">
+        <div class="row" *ngIf="!loading">
             <div class="col-12 col-md-6 col-lg-3" *ngFor="let actividad of actividades">
                 <div class="card h-100">
                     <div class="card-header px-4 pt-4">
@@ -67,24 +84,31 @@
                     </div>
                     <div class="card-body px-4 pt-2">
                         <p class="mb-0" [innerHTML]="transform(actividad.detalle)">
-    
+
                         </p>
                         <small class="text-muted d-flex">{{actividad.voluntarios.length}} voluntario(s)</small>
                         <div *ngIf="this.isLoggedIn() | async">
                             <span *ngFor="let voluntario of actividad.voluntarios">
-                                <img src="https://robohash.org/avatar3.png" title="{{voluntario.fullName}}"
+                                <img src="https://robohash.org/{{voluntario.username}}?size=28x28" title="{{voluntario.fullName}}"
                                     class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
                             </span>
                         </div>
-    
-    
+
+
                     </div>
-    
-                    <button class="btn btn-sm btn-primary" [routerLink]="['/actividad/'+actividad.id+'/show']"><i class="bi bi-box-arrow-up-right"></i> Ver detalles</button>
+
+                    <button class="btn btn-sm btn-primary" [routerLink]="['/actividad/'+actividad.id+'/show']"><i
+                            class="bi bi-box-arrow-up-right"></i> Ver detalles</button>
                 </div>
             </div>
             <div class="alert alert-info text-center" *ngIf="actividades.length===0">
                 No hay actividades
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center" *ngIf="loading">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
     </div>

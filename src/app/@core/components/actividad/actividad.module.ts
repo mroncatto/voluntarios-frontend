@@ -7,15 +7,19 @@ import { ActividadFormComponent } from './actividad-form/actividad-form.componen
 import { ActividadListComponent } from './actividad-list/actividad-list.component';
 import { ActividadShowComponent } from './actividad-show/actividad-show.component';
 import { EditorModule } from "@tinymce/tinymce-angular";
-import { PaginatorComponent } from '../../shared/components/paginator/paginator.component';
+
+// Angular Material
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
   declarations: [
     ActividadListComponent,
     ActividadFormComponent,
-    ActividadShowComponent,
-    PaginatorComponent
+    ActividadShowComponent
   ],
   imports: [
     BrowserModule,
@@ -23,8 +27,15 @@ import { PaginatorComponent } from '../../shared/components/paginator/paginator.
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    EditorModule
+    EditorModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatInputModule,
+    SharedModule
+    
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-PY'},
+  ],
 })
 export class ActividadModule { }

@@ -3,13 +3,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription, tap } from 'rxjs';
-import { Situacion } from 'src/app/@core/enum/situacion.enum';
 import { AlertService } from 'src/app/@core/shared/services/alert.service';
 import { AuthService } from 'src/app/@core/shared/services/auth.service';
 import { ErrorHandlingService } from 'src/app/@core/shared/services/error-handling.service';
-import { UserTipo } from '../../user/tipo-user.enum';
+import { UserTipo } from '../../user/enum/tipo-user.enum';
 import { Actividad } from '../actividad.entity';
 import { ActividadService } from '../actividad.service';
+import { Situacion } from '../enum/situacion.enum';
 
 @Component({
   selector: 'app-actividad-list',
@@ -22,6 +22,7 @@ export class ActividadListComponent implements OnInit, OnDestroy {
   private sub: Subscription[] = [];
   loading: boolean = false;
   paginator: any;
+
   constructor(private actividadService: ActividadService, private alertService: AlertService,
     private errorHandlingService: ErrorHandlingService, private authService: AuthService,
     private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) { }
@@ -40,11 +41,12 @@ export class ActividadListComponent implements OnInit, OnDestroy {
     this.sub.forEach(sub => sub.unsubscribe());
   }
 
+  // Valida si es de tipo Organizacion
   isOrganization(): boolean {
     return this.authService.getUserFromLocalStorage()?.userTipo === UserTipo.ORGANIZACION;
   }
 
-
+  // Retornar la clase css en base a la situacion de la actividad
   getSituacionClass(situacion: Situacion): string {
     const situacionClass = {
       PENDIENTE: 'bg-success',
@@ -54,17 +56,19 @@ export class ActividadListComponent implements OnInit, OnDestroy {
     return situacionClass[situacion];
   }
 
+  // Verifica si esta autenticado
   isLoggedIn(): Observable<boolean> {
     return this.authService.isLoggedIn;
   }
 
+  // Cross Site Scripting
   transform(value: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(value);
   }
 
-
-
+  // Obtiene las actividades de forma pageable
   private getActividades(page: number = 0): void {
+    this.loading = true;
     this.sub.push(
       this.actividadService.getActividadesPage(page)
         .pipe(

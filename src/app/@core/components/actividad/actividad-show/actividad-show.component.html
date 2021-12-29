@@ -11,22 +11,29 @@
                             titlecase}}</span></p>
                 </div>
 
-                <!-- Si esta autenticado y es voluntario -->
+                <!-- Si esta autenticado, la actividad esta pendiente y es voluntario -->
                 <div class="card-tools d-flex gap-2" *ngIf="this.isLoggedIn() && !isOrganization()">
-                    <button *ngIf="isInclude()" (click)="suscribe('desuscribirse de')" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i> Salir de la actividad</button>
-                    <button *ngIf="!isInclude()" (click)="suscribe('suscribirse a')"  class="btn btn-sm btn-success"><i class="bi bi-check-square"></i> Entrar como
+                    <button [disabled]="loading" *ngIf="isInclude()" (click)="suscribe('desuscribirse de')"
+                        class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i> Salir de la actividad</button>
+                    <button [disabled]="loading" *ngIf="!isInclude() && actividad.situacion==='PENDIENTE'"
+                        (click)="suscribe('suscribirse a')" class="btn btn-sm btn-success"><i
+                            class="bi bi-check-square"></i> Entrar como
                         voluntario</button>
                 </div>
 
                 <!-- Si esta autenticado y es organizacion -->
                 <div class="card-tools d-flex gap-2" *ngIf="this.isLoggedIn() && isOrganization()">
                     <!-- Si es el creador de la actividad -->
-                    <button *ngIf="actividad.creadoPor.username === getCurrentUser()" class="btn btn-sm btn-warning"><i
-                            class="bi bi-pencil"></i> Alterar actividad</button>
+                    <button [disabled]="loading" [routerLink]="['/actividad/'+actividad.id+'/form']"
+                        *ngIf="actividad.creadoPor.username === getCurrentUser()" class="btn btn-sm btn-warning"><i
+                            class="bi bi-pencil"></i>
+                        Alterar actividad
+                    </button>
                 </div>
                 <!-- Si no esta autenticado -->
                 <div class="card-tools d-flex gap-2" *ngIf="!this.isLoggedIn()">
-                    <button class="btn btn-sm btn-success"><i class="bi bi-check-square"></i> Entrar como
+                    <button [disabled]="loading" *ngIf="actividad.situacion==='PENDIENTE'"
+                        class="btn btn-sm btn-success"><i class="bi bi-check-square"></i> Entrar como
                         voluntario</button>
                 </div>
             </div>
@@ -35,10 +42,8 @@
             <div class="card-footer" *ngIf="this.isLoggedIn() | async">
                 <p><strong>Voluntarios:</strong></p>
                 <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center"
-                        *ngFor="let user of actividad.voluntarios">
-                        {{user.fullName}}
-                        <i *ngIf="this.isLoggedIn() && actividad.creadoPor.username === getCurrentUser()" class="bi bi-x-circle text-danger link link-animation" title="Remover voluntario"></i>
+                    <li class="list-group-item" *ngFor="let user of actividad.voluntarios">
+                        <img class="rounded-circle mr-1" src="https://robohash.org/{{user.username}}?size=24x24"> {{user.fullName}}
                     </li>
                     <li *ngIf="actividad.voluntarios.length===0" class="list-group-item text-center">No hay voluntarios
                     </li>
@@ -46,5 +51,4 @@
             </div>
         </div>
     </div>
-
 </div>

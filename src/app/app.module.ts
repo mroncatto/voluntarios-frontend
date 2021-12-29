@@ -10,6 +10,7 @@ import { DashboardModule } from './@core/components/dashboard/dashboard.module';
 import { ActividadModule } from './@core/components/actividad/actividad.module';
 import { UserModule } from './@core/components/user/user.module';
 import { AuthenticationInterceptor } from './@core/interceptor/authentication.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeEs, 'es')
 
@@ -22,13 +23,14 @@ registerLocaleData(localeEs, 'es')
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     DashboardModule,
     ActividadModule,
     UserModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-PY' },
-    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
 
   ],
   bootstrap: [AppComponent]
