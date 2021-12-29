@@ -20,7 +20,7 @@
     <a href="https://github.com/mroncatto/voluntarios-frontend"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/mroncatto/voluntarios-frontend">View Demo</a>
+    <a href="https://voluntarios-frontend.herokuapp.com">View Demo</a>
     ·
     <a href="https://github.com/mroncatto/voluntarios-frontend/issues">Report Bug</a>
     ·
@@ -59,9 +59,9 @@ Cuenta con las siguientes funcionalidades:
 ```
 
 <!-- GETTING STARTED -->
-### Empezando
+## Empezando
 
-Para ejecutar la API siga las siguientes etapas...
+Para ejecutar la aplicación siga las siguientes etapas...
 
 
 
@@ -87,7 +87,6 @@ Para ejecutar la API siga las siguientes etapas...
 ## Uso
 
 - Abrir http://localhost:4200 en el browser
-- Abre el demo en [Voluntarios Demo](https://)
 
 <!-- LICENSE -->
 ## Licencia
